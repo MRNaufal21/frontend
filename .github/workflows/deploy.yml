@@ -1,0 +1,52 @@
+name: Deploy Frontend to VPS
+
+on:
+  push:
+    branches:
+      - main  # Jalankan saat ada push ke cabang main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Deploy to VPS via SSH
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ 54.255.116.128 }}
+        username: ${{ ubuntu }}
+        key: ${{ -----BEGIN RSA PRIVATE KEY-----
+MIIEowIBAAKCAQEA631ICL8T9Wi97A+QNNUzxUnw1sn4nVzOTiPpQ+krmqCzl/31
+uumurrYwovWLGXJJUnpTBgEJHebCIW/mI0vRAvSYTpA4zpX5Y8i1TJZQAW+Q1bjZ
+hj3doG+6nH7RnU6W8/lgkQ04Gfg6cg0IIT1KjNHxh08JOYQ8T+1JZmZG78vP7UKk
+DHk1U3RgzDqLUuHEIEleAsRHKIbuLLWDfsVIssdzI8vrlc9N7/hUtwO/yVI835Ov
+rGqdS5VcfKSdKggtMbaPWbBtouLONY5WiewYOW5A3Fi1dlJmhBnPjk77J9vEaiC8
+EQ0LU0vZNpF3BRDjdTJDjEvY8KkywGcZMmDJmQIDAQABAoIBAGEh08yHxBu9kFkG
+Ml0Yc7o0vXpa5IlD9nSUq2qviqTFFE7lGa53JO47h+Qvk6hzU3sJqaUYWEJVJE3W
+cf6tDxFBAnGlW0ka4zsdVmq4tVdiRUNic5bDfd7nNvnF9YAFIo6Plh0+bp2HndPd
+PDU5qr5a+lztZMismpP9NAFgvnG5vP7QHvfrEwksLHyq5ESHP2UKwXLrkf15P4w/
+E2fwR8uoXu4/1EIQLNtRISFhRmoGRhC1GRAzl+NK39oZ5NdTGbQ2whgDALTAgDD3
+kb5H07UUbQVnCupS6vaxZzrjIJVJFMHAecHGaNsLS0DdaAyn7vOpO8oJTXxX8D3T
+xm2z+4ECgYEA+V03xzirrfV04DX4un3EP77r9cT38YGsucgGAVb1G8rG9zSKwrPo
+5ujpoLPI6WX9pR/WQ/AHHnU8DdGzGjqHMJVLexVOU28fQw3Q7dW5pUamlyToI7No
+ICUTblr2tGntyxSdjhCfyTB6ZkbwNtR4N6dkTgcit77N0kMzKvybPJ0CgYEA8cGK
+2IIwETbCw2avNRI41H73rEw4oLjaYmeT28qXR9ca+fChRytY45+CgFGyUPCVEMAq
+H2SwFw3H0HoPco81+Psd0WGA2t4Qxij0T5I9pJoPsVnpLfhFq2wqibFQl2yyZ9gT
+n+0ugKA9pz+Nd9r8Q5jYV/rYwCp05zcVvKXNCi0CgYEAywYYWb1MGdAUnk+S+NNY
+qsXY+zqo3BpF9ORj70dLPJt2LuK6bxdnckkDnfGCjHSbdItdOeb9BNFSWbX36kzo
+sKd80vNf2BJLE572Eg3GnkfNbpV/40E4b6OAFIM/BViRYJyiQn5KedVcclUjUqDe
+WAGTauvoWk2g6aYIzODpywkCgYBnbYv/UMNLugfdHSM8K02Q67j+R6W6bRtRGksR
+rzzFiWuLHr2A+zSOPYHRcCI/qo27mtrqj2MemdCwimftdQN8P8Lj/zjnajX28TKE
+kGY684ZfM74k4qC71Azm16tI/UHeV30d4JUShnuaAACAFHn0WYHFMhZlMETPXqu4
+B58PCQKBgBQw7cIiNJS4jar5THuu/4BiGspphsoBC5EZnomRSlTsgfKqsicFBu9h
+Ey/cW0N8bBy2XSbbFi1KPYnpP/lIsDg3DnjcV18xz0VUBmFUfFgDw5SgXZzLaT3l
+3MJo4TwUR2BPYAGTMWYGoMzYYcQANl7yMCqaNDqM36Ht2aZU8AQX
+-----END RSA PRIVATE KEY----- }}
+        script: |
+          cd /var/www/frontend
+          git pull origin main
+          npm install
+          npm run build
